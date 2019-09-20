@@ -1,4 +1,4 @@
-# ETLLocadora
+# ETL- Locadora e Vendas
 1. Criar os usuários: locadora, dw_locadora, vendas e dw_vendas;
 2. Conectar com o usuário locadora e executar o script da base operacional;
 3. Abrir o modelo dimensional da locadora (Data Modeler) e gerar o script da base dimensional;

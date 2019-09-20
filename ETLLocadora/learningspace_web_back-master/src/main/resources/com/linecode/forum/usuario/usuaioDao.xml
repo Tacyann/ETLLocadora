@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Querys relacionadas a usuario</comment>
+
+	<entry key="getUsuarioLogin">
+		SELECT 
+			ID,
+			MATRICULA,
+			NOME,
+			TIPO
+		FROM USUARIO
+		WHERE
+			MATRICULA = ? AND
+			SENHA = ?
+	</entry>
+	
+	<entry key="getUsuarioPorMatricula">
+		SELECT 
+			ID,
+			MATRICULA,
+			NOME,
+			TIPO
+		FROM USUARIO
+		WHERE
+			MATRICULA = ?
+	</entry>
+	
+	<entry key="cadastrarUsuario">
+		INSERT INTO USUARIO (
+			MATRICULA,
+			NOME,
+			SENHA,
+			EMAIL,
+			TIPO,
+			CURSO,
+			PERIODO,
+			TELEFONE
+		) VALUES (?,?,?,?,?,?,?, ?)
+	</entry>
+	
+	<entry key="inserirCursoUsario">
+		INSERT INTO CURSO_USUARIO (NOME,INSTITUICAO,USUARIO) VALUES (?,?,?)
+	</entry>
+	
+	<entry key="atualizarInformacaoContatoUsuario">
+		UPDATE USUARIO SET EMAIL = ?, TELEFONE = ? WHERE ID = ?
+	</entry>
+	
+	<entry key="deletarCursosUsuario">
+		DELETE FROM CURSO_USUARIO WHERE USUARIO = ?
+	</entry>
+	
+	<entry key="atualizarFoto">
+		UPDATE USUARIO SET FOTO = ? WHERE ID = ?
+	</entry>
+	
+	<entry key="getFoto">
+		SELECT FOTO FROM USUARIO WHERE ID = ?
+	</entry>
+	
+	<entry key="getDadosPerfilUsario">
+		SELECT
+		    -- DADOS USUARIO
+		    U.MATRICULA,
+		    U.NOME,
+		    U.EMAIL,
+		    U.TELEFONE,
+		    U.FOTO,
+		    -- DADOS CURSOS USUARIO
+		    C.NOME AS NOME_CURSO,
+		    C.INSTITUICAO AS INSTITUICAO_CURSO
+		FROM USUARIO U
+		    JOIN CURSO_USUARIO C
+			ON U.ID = C.usuario
+		WHERE U.ID = ?
+	</entry>
+	
+</properties>

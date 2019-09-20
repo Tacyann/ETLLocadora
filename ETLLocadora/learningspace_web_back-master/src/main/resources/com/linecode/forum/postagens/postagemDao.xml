@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <comment>Querys relacionadas as postagens</comment>
+
+    <entry key="criarPostagem">
+        INSERT INTO POSTAGEM (
+        TEXTO_POSTAGEM,
+        TIT_POSTAGEM,
+        ID_CRIADOR,
+        DATA_POSTAGEM,
+        ID_DISCIPLINA
+        ) VALUES (?, ?, ?, NOW(), ?) RETURNING ID_POSTAGEM;
+    </entry>
+
+    <entry key="listarPostagemUsuario">
+        SELECT
+        P.ID_POSTAGEM,
+        P.TEXTO_POSTAGEM,
+        P.TIT_POSTAGEM,
+        P.ID_CRIADOR,
+        P.DATA_POSTAGEM,
+        P.ID_DISCIPLINA
+        FROM POSTAGEM P
+        JOIN USUARIO U ON
+        U.ID = P.ID_CRIADOR
+        WHERE U.ID = ?
+    </entry>
+
+    <entry key="deletarPostagem">
+        DELETE FROM POSTAGEM WHERE ID_POSTAGEM = ?
+    </entry>
+
+    <entry key="votarPostagem">
+        INSERT INTO VOTACAO_POSTAGEM (ID_POSTAGEM, ID_USUARIO, VOTO) VALUES (?, ?, ?)
+    </entry>
+
+    <entry key="atualizarVotoPostagem">
+        UPDATE VOTACAO_POSTAGEM SET VOTO = ? WHERE ID_USUARIO = ? AND ID_POSTAGEM = ?
+    </entry>
+
+    <entry key="criarComentario">
+        INSERT INTO COMENTARIO (ID_POSTAGEM,ID_USUARIO,TEXTO_COMENTARIO,DATA_COMENTARIO) VALUES (?,?,?, NOW())
+    </entry>
+
+    <entry key="votarComentario">
+        INSERT INTO VOTACAO_COMENTARIO (ID_USUARIO, ID_COMENTARIO, VOTO) VALUES (?, ?, ?)
+    </entry>
+
+    <entry key="atualizarVotoComentario">
+        UPDATE VOTACAO_COMENTARIO SET VOTO = ? WHERE ID_USUARIO = ? AND ID_COMENTARIO = ?
+    </entry>
+
+    <entry key="inserirAnexo">
+        INSERT INTO ANEXO_POSTAGEM (ID_POSTAGEM, NOME_ANEXO) VALUES (?, ?)
+    </entry>
+
+    <entry key="getIdCriadorComentario">
+        SELECT ID_USUARIO FROM COMENTARIO WHERE ID_COMENTARIO = ?
+    </entry>
+
+    <entry key="deletarComentario">
+        DELETE FROM COMENTARIO WHERE ID_COMENTARIO = ?
+    </entry>
+
+    <entry key="getAnexosPostagem">
+        SELECT ID_ANEXO, NOME_ANEXO FROM ANEXO_POSTAGEM WHERE ID_POSTAGEM = ?
+    </entry>
+
+    <entry key="quantidadePostagens">
+        SELECT COUNT(*) FROM POSTAGEM
+    </entry>
+
+    <entry key="quantidadePostagemUsuario">
+        SELECT COUNT(*) FROM POSTAGEM WHERE ID_CRIADOR = ?
+    </entry>
+
+    <entry key="listarPostagens">
+        SELECT
+            ID_POSTAGEM,
+            TEXTO_POSTAGEM,
+            TIT_POSTAGEM,
+            ID_CRIADOR,
+            DATA_POSTAGEM,
+            ID_DISCIPLINA
+        FROM POSTAGEM
+    </entry>
+
+    <entry key="listarPostagensDisciplina">
+        SELECT
+            ID_POSTAGEM,
+            TEXTO_POSTAGEM,
+            TIT_POSTAGEM,
+            ID_CRIADOR,
+            DATA_POSTAGEM,
+            ID_DISCIPLINA
+        FROM POSTAGEM
+        WHERE ID_DISCIPLINA IN ( SELECT ID FROM DISCIPLINA WHERE UNACCENT(NOME) ILIKE ? );
+    </entry>
+
+    <entry key="inserirTagPostagem">
+    	INSERT INTO TAG_POSTAGEM (POSTAGEM, TAG) VALUES (?, ?);
+    </entry>
+
+    <entry key="pesquisarAnexo">
+        SELECT
+            ID_ANEXO,
+            NOME_ANEXO
+        FROM ANEXO_POSTAGEM
+        WHERE NOME_ANEXO LIKE ?
+    </entry>
+
+    <entry key="quantidadeAnexo">
+        SELECT
+            COUNT(*)
+        FROM ANEXO_POSTAGEM
+    </entry>
+	
+	<entry key="getCaminhoAnexo">
+		SELECT 
+			CONCAT(ID_POSTAGEM, ? , NOME_ANEXO) 
+		FROM ANEXO_POSTAGEM WHERE ID_ANEXO = ?
+	</entry>
+
+</properties>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Querys relacionadas a questionarios</comment>
+
+    <entry key="getTopicos">
+        SELECT ID_TOPICO, DSC_TOPICO FROM TOPICO
+    </entry>
+
+    <entry key="cadastrarTopico">
+        INSERT INTO TOPICO (DSC_TOPICO) VALUES (?)
+    </entry>
+
+    <entry key="cadastrarQuiz">
+        INSERT INTO QUIZ (DSC_QUIZ, ID_TOPICO) VALUES (?,?)
+    </entry>
+
+    <entry key="deletarQuiz">
+        DELETE FROM QUIZ WHERE ID_QUIZ = ?
+    </entry>
+
+    <entry key="listarQuizes">
+        SELECT ID_QUIZ, DSC_QUIZ, ID_TOPICO FROM QUIZ
+    </entry>
+
+    <entry key="cadastrarPergunta">
+        INSERT INTO PERGUNTA (ID_QUIZ, DSC_PERGUNTA, URL_IMAGEM) VALUES (?, ?, ?)
+    </entry>
+
+    <entry key="deletarPergunta">
+        DELETE FROM PERGUNTA WHERE ID_PERGUNTA = ? AND ID_QUIZ = ?
+    </entry>
+
+    <entry key="listarPerguntas">
+        SELECT ID_PERGUNTA, ID_QUIZ, DSC_PERGUNTA, URL_IMAGEM FROM PERGUNTA WHERE ID_QUIZ = ?
+    </entry>
+
+
+    <entry key="cadastrarEscolha">
+        INSERT INTO ESCOLHA (ID_PERGUNTA, DSC_ESCOLHA, EXP_ESCOLHA, CORRETA) VALUES (?, ?, ?, ?)
+    </entry>
+
+    <entry key="listarEscolhas">
+        SELECT ID_PERGUNTA, ID_ESCOLHA, DSC_ESCOLHA, EXP_ESCOLHA, CORRETA FROM ESCOLHA WHERE ID_PERGUNTA = ?
+    </entry>
+    <entry key="quantidadePerguntasQuiz">
+        SELECT COUNT(*) FROM PERGUNTA WHERE ID_QUIZ = ?
+    </entry>
+
+    <entry key="quantidadeQuizes">
+        SELECT COUNT(*) FROM QUIZ
+    </entry>
+
+</properties>

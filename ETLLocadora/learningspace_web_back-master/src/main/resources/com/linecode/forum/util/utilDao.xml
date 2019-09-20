@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Querys relacionadas a usuario</comment>
+	
+	<entry key="getCursos">
+		SELECT ID, NOME FROM CURSO
+	</entry>
+	
+	<entry key="getDisciplinasPorCurso">
+		SELECT ID, NOME, PERIODO FROM DISCIPLINA WHERE ID_CURSO = ?
+	</entry>
+	
+	<entry key="getTags">
+		SELECT 
+			ID, 
+			DESCRICAO 
+		FROM TAG 
+		WHERE UPPER(DESCRICAO) LIKE ?
+		LIMIT 5;
+	</entry>
+	
+</properties>

@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
-
 import br.com.Conexao;
-//import br.com.Integer;
 
 	public class Conexao {
 		
@@ -27,20 +24,21 @@ import br.com.Conexao;
 		}
 		
 		public static Connection getConexao() {
-			MysqlDataSource ds = new MysqlDataSource();
-			ds.setServerName(SERVER);
-			ds.setPort(PORTA);
-			ds.setDatabaseName(DATABASE);
-			
+						
 			try {
-				Connection conn = DriverManager.getConnection(ds.getUrl() + "?useSSL=false&useTimezone=true&serverTimezone=UTC",USER, PASSWORD);
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				Connection conn = DriverManager.getConnection("jdbc:oracle:thin"+SERVER+":"+PORTA+":"+DATABASE,USER, PASSWORD);
 				if(conn != null) {
-					var msg = "ConexÃ£o efetuada com sucesso";
+					var msg = "Conexão efetuada com sucesso";
 					status = msg;
 					return conn;
 				}
 			} catch (SQLException e) {
-				var msg = "Falha na conexÃ£o -> " + e.getMessage();
+				var msg = "Falha na conexãoo -> " + e.getMessage();
+				status = msg;
+				return null;
+			} catch (ClassNotFoundException e) {
+				var msg = "Driver não encontrado ->" + e.getMessage();
 				status = msg;
 				return null;
 			}
